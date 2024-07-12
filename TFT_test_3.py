@@ -215,4 +215,8 @@ baseline_predictions = Baseline().predict(val_dataloader)
 ##calculate baseline mean absolute error, i.e. predict next value as the last available value from the history
 baseline_predictions = Baseline().predict(val_dataloader, return_y=True)
 MAE()(baseline_predictions.output, baseline_predictions.y)
-MAE()(raw_predictions[0][0],raw_predictions[0][1])
+#### raw_predictions.keys()
+temp_output=temp_.output[0]
+temp_y=temp_.y[0]
+MAE_percent=np.mean(np.array([MAE()(temp_output[:,:,i],temp_y)/torch.mean(temp_y) for i in range(temp_output.shape[2])]))
+MAE_mean_percent=MAE()(torch.mean(temp_output,dim=2),temp_y)/torch.mean(temp_y)
